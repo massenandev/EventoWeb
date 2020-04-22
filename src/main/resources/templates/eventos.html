@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>EventoWeb</title>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<link rel="icon" href="/image/favicon.png" />
+
+<!-- Bootstrap core CSS -->
+<link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="/webjars/open-iconic/font/css/open-iconic-bootstrap.min.css"
+		rel="stylesheet" />
+
+<!-- Custom styles for this template -->
+<link href="/css/style.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="container">
+
+		<div class="jumbotron"  style="text-align: center" >
+			<h1 class="display-5">EventoWeb</h1>
+			<p class="lead">Sistema de Controle de Eventos</p>
+			<hr class="my-4">
+		</div>
+		<div style="text-align: center">
+			<h3>Eventos cadastrados</h3>
+		</div>
+		<div style="text-align: right; padding-bottom: 10px;">
+			<button type="button" id="addEventoID" class="btn btn-primary" 
+			data-toggle="modal" data-target="#modalForm">Adicionar Evento</button>
+		</div>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">Evento</th>
+					<th scope="col">Organização</th>
+					<th scope="col">Local</th>
+					<th scope="col">Data</th>
+					<th scope="col">Horário</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="e : ${eventos}">
+					<td th:text="${e.nome}"></td>
+					<td th:text="${e.organizacao}"></td>
+					<td th:text="${e.local}"></td>
+					<td th:text="${#temporals.format(e.data, 'dd-MM-yyyy')}"></td>
+					<td th:text="${#temporals.format(e.data, 'HH:mm')}"></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<!-- Modal -->
+		<div class="modal fade" id="modalForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<form action="#" th:action="@{/cadastrar}" th:object="${evento}" method="post">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Cadastro do Evento</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="row">
+								<div class="col">
+									<label for="formGroupExampleInput">Nome do evento</label> 
+									<input type="text" th:field="*{nome}" class="form-control" id="formGroupExampleInput" placeholder="Insira o nome do evento">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<label for="formGroupExampleInput">Nome da organização</label>
+									<input type="text" th:field="*{organizacao}" class="form-control" id="formGroupExampleInput" placeholder="Insira o nome da organização">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<label for="formGroupExampleInput">Local</label> 
+									<input type="text" th:field="*{local}" class="form-control" id="formGroupExampleInput" placeholder="Insira o local">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<label for="formGroupExampleInput">Data</label> 
+									<input th:field="*{data}" class="form-control date" id="formGroupExampleInput" placeholder="Insira a data">
+								</div>
+								<div class="col">
+									<label for="formGroupExampleInput">Hora</label> 
+									<input type="text" th:field="*{hora}" class="form-control time" id="formGroupExampleInput" placeholder="Insira o horário">
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+							<button type="submit" class="btn btn-primary">Cadastrar</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
+<script>
+	$(document).ready(function(){
+		jQuery('.date').mask('00/00/0000');
+		jQuery('.time').mask('00:00');
+	});
+</script>
+</html>
