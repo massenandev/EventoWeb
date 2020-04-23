@@ -16,8 +16,6 @@ public class EventoController {
 	@Autowired
 	private EventoService eventoService;
 	
-	public String dataLocal;
-	
 	@GetMapping("/")
 	public String load(Model model, EventoDto evento) {
 		model.addAttribute("eventos", eventoService.loadAll());
